@@ -334,6 +334,7 @@ export default defineComponent({
           title: '左侧',
           span: 12,
           children: [
+            { field: '', title: '基本', span: 24, titlePrefix: '{icon: \'fa-address-card-o\'}', itemRender: { name: '<hr>' } },
             { field: 'name', title: '名称', span: 8, itemRender: { name: '$input', props: { placeholder: '请输入名称' } } },
             { field: 'sex', title: '性别', span: 8, itemRender: { name: '$select', options: [{ value: '0', label: '女' }, { value: '1', label: '男' }], props: { placeholder: '请选择性别' } } },
             { field: 'role', title: '角色', span: 8, itemRender: { name: '$input', props: { placeholder: '请输入角色' } } },

@@ -5553,7 +5553,7 @@ export default defineComponent({
      */
     const renderFixed = (fixedType: 'left' | 'right') => {
       const { showHeader, showFooter } = props
-      const { tableData, tableColumn, tableGroupColumn, columnStore, footerTableData } = reactData
+      const { tableData, tableColumn, useCustomHeaderRowSpan, tableGroupColumn, columnStore, footerTableData } = reactData
       const isFixedLeft = fixedType === 'left'
       const fixedColumn = isFixedLeft ? columnStore.leftList : columnStore.rightList
       return h('div', {
@@ -5563,6 +5563,7 @@ export default defineComponent({
         showHeader ? h(resolveComponent('vxe-table-header') as ComponentOptions, {
           ref: isFixedLeft ? refTableLeftHeader : refTableRightHeader,
           fixedType,
+          useCustomHeaderRowSpan,
           tableData,
           tableColumn,
           tableGroupColumn,
