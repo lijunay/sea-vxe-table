@@ -3,7 +3,11 @@ import { VXEComponent, VxeComponentBase, VxeEvent, SizeType, VNodeStyle, ValueOf
 
 /**
  * 组件 - 输入框
- * @example import { Input as VxeInput } from 'vxe-table'
+ * @example import { VxeInput } from 'vxe-table'
+ */
+export const VxeInput: VXEComponent<VxeInputProps, VxeInputEventProps>
+/**
+ * 组件 - 输入框
  */
 export const Input: VXEComponent<VxeInputProps, VxeInputEventProps>
 
@@ -55,6 +59,7 @@ export namespace VxeInputPropTypes {
   export type Disabled = boolean
   export type Placeholder = string
   export type Maxlength = string | number
+  export type Multiple = boolean
   export type Autocomplete = string
   export type Align = string
   export type Form = string
@@ -64,6 +69,8 @@ export namespace VxeInputPropTypes {
   export type Exponential = boolean
   export type Controls = boolean
   export type Digits = string | number
+  export type StartDate = string | number | Date
+  export type EndDate = string | number | Date
   export type MinDate = string | number | Date
   export type MaxDate = string | number | Date
   export type StartDay = 0 | 1 | 2 | 3 | 4 | 5 | 6
@@ -91,6 +98,7 @@ export type VxeInputProps = {
   disabled?: VxeInputPropTypes.Disabled
   placeholder?: VxeInputPropTypes.Placeholder
   maxlength?: VxeInputPropTypes.Maxlength
+  multiple?: VxeInputPropTypes.Multiple
   autocomplete?: VxeInputPropTypes.Autocomplete
   align?: VxeInputPropTypes.Align
   form?: VxeInputPropTypes.Form
@@ -108,6 +116,8 @@ export type VxeInputProps = {
   digits?: VxeInputPropTypes.Digits
 
   // date、week、month、quarter、year
+  startDate?: VxeInputPropTypes.StartDate
+  endDate?: VxeInputPropTypes.EndDate
   minDate?: VxeInputPropTypes.MinDate
   maxDate?: VxeInputPropTypes.MaxDate
   /**
@@ -140,6 +150,15 @@ export interface InputMethods {
    * 失去焦点
    */
   blur(): Promise<any>
+  /**
+   * 弹出面板，用于带下拉面板的功能，
+   */
+  showPanel(): Promise<any>
+  /**
+   * 关闭面板，用于带下拉面板的功能，
+   */
+  hidePanel(): Promise<any>
+  updatePlacement(): Promise<any>
 }
 export interface VxeInputMethods extends InputMethods { }
 

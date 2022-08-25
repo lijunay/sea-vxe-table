@@ -6,7 +6,11 @@ import { VxeGlobalRendererHandles } from './v-x-e-table'
 
 /**
  * 组件 - 表单项
- * @example import { FormItem as VxeFormItem } from 'vxe-table'
+ * @example import { VxeFormItem } from 'vxe-table'
+ */
+export const VxeFormItem: VXEComponent<VxeFormItemProps>
+/**
+ * 组件 - 表单项
  */
 export const FormItem: VXEComponent<VxeFormItemProps>
 
@@ -35,6 +39,14 @@ export interface VxeFormItemProps {
    * 标题宽度
    */
   titleWidth?: VxeFormItemPropTypes.TitleWidth
+  /**
+   * 是否显示标题冒号
+   */
+  titleColon?: VxeFormItemPropTypes.TitleColon
+  /**
+   * 是否显示必填字段的红色星号
+   */
+  titleAsterisk?: VxeFormItemPropTypes.TitleAsterisk
   /**
    * 给表单项附加 className
    */
@@ -83,14 +95,21 @@ export namespace VxeFormItemPropTypes {
   export type Align = VxeFormPropTypes.Align
   export type TitleAlign = VxeFormPropTypes.TitleAlign
   export type TitleWidth = VxeFormPropTypes.TitleWidth
+  export type TitleColon = VxeFormPropTypes.TitleColon
+  export type TitleAsterisk = VxeFormPropTypes.TitleAsterisk
 
   interface ClassNameParams {
     $form: VxeFormConstructor
     data: any
     item: VxeFormDefines.ItemInfo
+    field: string
+    /**
+     * @deprecated
+     */
     property: string
   }
   export type ClassName = string | ((params: ClassNameParams) => string)
+  export type Readonly = boolean
 
   interface PrefixOption {
     useHTML?: VxeTooltipPropTypes.UseHTML
@@ -154,6 +173,10 @@ export interface FormItemTitleRenderParams {
   $form: VxeFormConstructor
   data: any
   item: VxeFormDefines.ItemInfo
+  field: string
+  /**
+   * @deprecated
+   */
   property: string
 }
 
@@ -164,6 +187,10 @@ export interface FormItemContentRenderParams {
   $form: VxeFormConstructor
   data: any
   item: VxeFormDefines.ItemInfo
+  field: string
+  /**
+   * @deprecated
+   */
   property: string
 }
 
@@ -174,6 +201,10 @@ export interface FormItemVisibleParams {
   $form: VxeFormConstructor
   data: any
   item: VxeFormDefines.ItemInfo
+  field: string
+  /**
+   * @deprecated
+   */
   property: string
 }
 
@@ -186,7 +217,6 @@ export interface FormItemResetParams {
   item: VxeFormDefines.ItemInfo
   field: string
   /**
-   * 已废弃，该属性被 field 替换
    * @deprecated
    */
   property: string

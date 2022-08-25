@@ -1,7 +1,6 @@
 import { createCommentVNode, defineComponent, h, ref, Ref, PropType, inject, nextTick, onMounted, onUnmounted } from 'vue'
 import XEUtils from 'xe-utils'
-import { getPropClass } from '../../table/src/util'
-import { updateCellTitle } from '../../tools/dom'
+import { updateCellTitle, getPropClass } from '../../tools/dom'
 
 import { VxeTablePrivateMethods, VxeTableConstructor, VxeTableMethods, VxeColumnPropTypes, VxeTableDefines } from '../../../types/all'
 
@@ -81,11 +80,11 @@ export default defineComponent({
         const { fixedType } = props
         const { elemStore } = tableInternalData
         const prefix = `${fixedType || 'main'}-footer-`
-        elemStore[`${prefix}wrapper`] = refElem.value
-        elemStore[`${prefix}table`] = refFooterTable.value
-        elemStore[`${prefix}colgroup`] = refFooterColgroup.value
-        elemStore[`${prefix}list`] = refFooterTFoot.value
-        elemStore[`${prefix}xSpace`] = refFooterXSpace.value
+        elemStore[`${prefix}wrapper`] = refElem
+        elemStore[`${prefix}table`] = refFooterTable
+        elemStore[`${prefix}colgroup`] = refFooterColgroup
+        elemStore[`${prefix}list`] = refFooterTFoot
+        elemStore[`${prefix}xSpace`] = refFooterXSpace
       })
     })
 

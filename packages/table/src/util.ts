@@ -1,4 +1,4 @@
-import { watch } from 'vue'
+import { watch, reactive } from 'vue'
 import XEUtils from 'xe-utils'
 import { ColumnInfo } from './columnInfo'
 import { isPx, isScale } from '../../tools/dom'
@@ -104,16 +104,12 @@ export function toTreePathSeq (path: any[]) {
   return path.map((num, i) => i % 2 === 0 ? (Number(num) + 1) : '.').join('')
 }
 
-export function getCellValue (row: any, column: any) {
-  return XEUtils.get(row, column.property)
+export function getCellValue (row: any, column: VxeTableDefines.ColumnInfo) {
+  return XEUtils.get(row, column.field)
 }
 
-export function setCellValue (row: any, column: any, value: any) {
-  return XEUtils.set(row, column.property, value)
-}
-
-export function getPropClass (property: any, params: any) {
-  return property ? XEUtils.isFunction(property) ? property(params) : property : ''
+export function setCellValue (row: any, column: VxeTableDefines.ColumnInfo, value: any) {
+  return XEUtils.set(row, column.field, value)
 }
 
 export function getColMinWidth (params: {
@@ -179,7 +175,7 @@ export function isColumnInfo (column: any): column is ColumnInfo {
 }
 
 export function createColumn ($xetable: VxeTableConstructor & VxeTablePrivateMethods, options: VxeTableDefines.ColumnOptions | VxeTableDefines.ColumnInfo, renderOptions: any) {
-  return isColumnInfo(options) ? options : new ColumnInfo($xetable, options, renderOptions)
+  return isColumnInfo(options) ? options : reactive(new ColumnInfo($xetable, options, renderOptions))
 }
 
 export function watchColumn (props: any, column: ColumnInfo) {
