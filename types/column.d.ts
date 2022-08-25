@@ -1,5 +1,5 @@
 import { VNode } from 'vue'
-import { VXEComponent } from './component'
+import { VXEComponent, SlotVNodeType } from './component'
 import { VxeTableConstructor, VxeTableDefines, VxeTablePropTypes } from './table'
 import { VxeGlobalRendererHandles } from './v-x-e-table'
 import { VxeFilterPanel } from './filter'
@@ -7,7 +7,11 @@ import { VxeTooltipPropTypes } from './tooltip'
 
 /**
  * 组件 - 表格列
- * @example import { Column as VxeColumn } from 'vxe-table'
+ * @example import { VxeColumn } from 'vxe-table'
+ */
+export const VxeColumn: VXEComponent<VxeColumnProps>
+/**
+ * 组件 - 表格列
  */
 export const Column: VXEComponent<VxeColumnProps>
 
@@ -208,16 +212,16 @@ export namespace VxeColumnPropTypes {
   interface IconSlotParams extends DefaultSlotParams { }
 
   export type Slots = {
-    title?: string | ((params: HeaderSlotParams) => JSX.Element[] | VNode[] | string[]) | null
-    radio?: string | ((params: DefaultSlotParams) => JSX.Element[] | VNode[] | string[]) | null
-    checkbox?: string | ((params: DefaultSlotParams) => JSX.Element[] | VNode[] | string[]) | null
-    default?: string | ((params: DefaultSlotParams) => JSX.Element[] | VNode[] | string[]) | null
-    header?: string | ((params: HeaderSlotParams) => JSX.Element[] | VNode[] | string[]) | null
-    footer?: string | ((params: FooterSlotParams) => JSX.Element[] | VNode[] | string[]) | null
-    content?: string | ((params: ContentSlotParams) => JSX.Element[] | VNode[] | string[]) | null
-    filter?: string | ((params: FilterSlotParams) => JSX.Element[] | VNode[] | string[]) | null
-    edit?: string | ((params: EditSlotParams) => JSX.Element[] | VNode[] | string[]) | null
-    icon?: string | ((params: IconSlotParams) => JSX.Element[] | VNode[] | string[]) | null
+    title?: string | ((params: HeaderSlotParams) => SlotVNodeType[] | SlotVNodeType) | null
+    radio?: string | ((params: DefaultSlotParams) => SlotVNodeType[] | SlotVNodeType) | null
+    checkbox?: string | ((params: DefaultSlotParams) => SlotVNodeType[] | SlotVNodeType) | null
+    default?: string | ((params: DefaultSlotParams) => SlotVNodeType[] | SlotVNodeType) | null
+    header?: string | ((params: HeaderSlotParams) => SlotVNodeType[] | SlotVNodeType) | null
+    footer?: string | ((params: FooterSlotParams) => SlotVNodeType[] | SlotVNodeType) | null
+    content?: string | ((params: ContentSlotParams) => SlotVNodeType[] | SlotVNodeType) | null
+    filter?: string | ((params: FilterSlotParams) => SlotVNodeType[] | SlotVNodeType) | null
+    edit?: string | ((params: EditSlotParams) => SlotVNodeType[] | SlotVNodeType) | null
+    icon?: string | ((params: IconSlotParams) => SlotVNodeType[] | SlotVNodeType) | null
   }
 }
 

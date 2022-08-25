@@ -6,7 +6,11 @@ import { VxeOptionProps, VxeOptionPropTypes } from './option'
 
 /**
  * 组件 - 下拉框
- * @example import { Select as VxeSelect } from 'vxe-table'
+ * @example import { VxeSelect } from 'vxe-table'
+ */
+export const VxeSelect: VXEComponent<VxeSelectProps, VxeSelectEventProps>
+/**
+ * 组件 - 下拉框
  */
 export const Select: VXEComponent<VxeSelectProps, VxeSelectEventProps>
 
@@ -28,17 +32,24 @@ export interface VxeSelectPrivateRef extends SelectPrivateRef { }
 export interface SelectReactData {
   inited: boolean
   staticOptions: VxeSelectDefines.OptionInfo[]
-  fullGroupList: VxeSelectPropTypes.OptionGroups
-  fullOptionList: VxeOptionProps[]
-  visibleGroupList: VxeSelectPropTypes.OptionGroups
-  visibleOptionList: VxeOptionProps[]
+  fullGroupList: any[]
+  fullOptionList: any[]
+  visibleGroupList: any[]
+  visibleOptionList: any[]
+  remoteValueList: {
+    key: string
+    result: any
+  }[]
   panelIndex: number
   panelStyle: VNodeStyle
   panelPlacement: any
+  currentOption: any
   currentValue: any
   visiblePanel: boolean
   animatVisible: boolean
   isActivated: boolean
+  searchValue: string,
+  searchLoading: boolean
 }
 
 export type VxeSelectProps = {
@@ -59,6 +70,10 @@ export type VxeSelectProps = {
   optionGroupProps?: VxeSelectPropTypes.OptionGroupProps
   optionConfig?: VxeSelectPropTypes.OptionConfig
   emptyText?: VxeSelectPropTypes.EmptyText
+  filterable?: VxeSelectPropTypes.Filterable
+  filterMethod?: VxeSelectPropTypes.FilterMethod
+  remote?: VxeSelectPropTypes.Remote
+  remoteMethod?: VxeSelectPropTypes.RemoteMethod
   /**
    * 已废弃，被 optionConfig.keyField 替换
    * @deprecated
@@ -88,6 +103,10 @@ export namespace VxeSelectPropTypes {
   export type OptionProps = VxeGlobalRendererHandles.RenderOptionProps
   export type OptionGroups = VxeSelectDefines.SelectOptgroups[]
   export type OptionGroupProps = VxeGlobalRendererHandles.RenderOptionGroupProps
+  export type Filterable = boolean
+  export type FilterMethod = (params: { group: any, option: any, searchValue: string }) => boolean
+  export type Remote = boolean
+  export type RemoteMethod = (params: { searchValue: string }) => Promise<void> | void
   /**
    * 选项配置项
    */

@@ -1,5 +1,5 @@
 import { RenderFunction, SetupContext, Ref, ComputedRef, ComponentPublicInstance, ComponentInternalInstance, VNode } from 'vue'
-import { VXEComponent, VxeComponentBase, VxeEvent, RecordInfo, SizeType, ValueOf, VNodeStyle } from './component'
+import { VXEComponent, VxeComponentBase, VxeEvent, RecordInfo, SizeType, ValueOf, VNodeStyle, SlotVNodeType } from './component'
 import { VxeTableProEmits, VxeTableProDefines } from './plugins/pro'
 import { VxeColumnPropTypes, VxeColumnProps } from './column'
 import { VXETableSetupOptions, VxeGlobalRendererHandles } from './v-x-e-table'
@@ -10,7 +10,11 @@ import { VxeMenuPanelInstance } from './menu'
 
 /**
  * 组件 - 表格
- * @example import { Table as VxeTable } from 'vxe-table'
+ * @example import { VxeTable } from 'vxe-table'
+ */
+export const VxeTable: VXEComponent<VxeTableProps, VxeTableEventProps>
+/**
+ * 组件 - 表格
  */
 export const Table: VXEComponent<VxeTableProps, VxeTableEventProps>
 
@@ -675,7 +679,7 @@ export interface VxeTableMethods extends TableMethods { }
 export interface TablePrivateMethods {
   getSetupOptions(): VXETableSetupOptions
   updateAfterDataIndex(): void
-  callSlot<T>(slotFunc: ((params: T) => any[]) | string | null, params: T): VNode[]
+  callSlot<T>(slotFunc: ((params: T) => SlotVNodeType | SlotVNodeType[]) | string | null, params: T): SlotVNodeType[]
   getParentElem(): Element | null
   getParentHeight(): number
   getExcludeHeight(): number
@@ -929,7 +933,9 @@ export interface TableReactData {
 
 export interface TableInternalData {
   tZindex: number
-  elemStore: any
+  elemStore: {
+    [key: string]: Ref<HTMLElement> | null
+  }
   // 存放横向 X 虚拟滚动相关的信息
   scrollXStore: {
     offsetSize: number
@@ -1865,6 +1871,7 @@ export namespace VxeTablePropTypes {
    */
   export interface EditConfig {
     trigger?: 'manual' | 'click' | 'dblclick'
+    enabled?: boolean
     mode?: string
     icon?: string
     showIcon?: boolean
@@ -1875,6 +1882,18 @@ export namespace VxeTablePropTypes {
     autoClear?: boolean
     /**
      * 该方法的返回值用来决定该单元格是否允许编辑
+     */
+    beforeEditMethod?(params: {
+      row: any
+      rowIndex: number
+      column: VxeTableDefines.ColumnInfo
+      columnIndex: number
+      $table: VxeTableConstructor & VxeTablePrivateMethods
+      $grid: VxeGridConstructor | null | undefined
+    }): boolean
+    /**
+     * 请使用 beforeEditMethod
+     * @deprecated
      */
     activeMethod?(params: {
       row: any
@@ -1919,6 +1938,7 @@ export namespace VxeTablePropTypes {
     gt?: number
     oSize?: number
     enabled?: boolean
+    scrollToLeftOnChange?: boolean
   }
   export interface SXOpts extends ScrollX {
     gt: number
@@ -1930,6 +1950,7 @@ export namespace VxeTablePropTypes {
     gt?: number
     oSize?: number
     enabled?: boolean
+    scrollToTopOnChange?: boolean
     /**
      * @deprecated 请使用 row-config.height
      */
@@ -2453,7 +2474,9 @@ export namespace VxeTableDefines {
   export interface FilterVisibleEventParams extends TableEventParams, FilterVisibleParams { }
 
   export interface ResizableChangeParams extends TableBaseHeaderCellParams { }
-  export interface ResizableChangeEventParams extends TableEventParams, ResizableChangeParams { }
+  export interface ResizableChangeEventParams extends TableEventParams, ResizableChangeParams {
+    resizeWidth: number
+  }
 
   export interface ToggleRowExpandParams extends TableBaseCellParams { }
   export interface ToggleRowExpandEventParams extends TableEventParams, ToggleRowExpandParams { }
